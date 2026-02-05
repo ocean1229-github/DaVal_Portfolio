@@ -1,0 +1,218 @@
+.adminLayout {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+}
+
+.sidebar {
+    width: 250px;
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    z-index: 100;
+}
+
+.sidebarHeader {
+    padding: var(--space-lg) var(--space-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+}
+
+.userInfo {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.nav {
+    flex: 1;
+    padding: var(--space-md) var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+}
+
+.navGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.navLink:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.active {
+    background-color: rgba(112, 0, 255, 0.1);
+    color: var(--accent-secondary) !important;
+}
+
+.subItems {
+    margin-left: 20px;
+    margin-top: 4px;
+    border-left: 1px solid var(--border-color);
+    padding-left: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.subNavLink {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.subNavLink:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.subActive {
+    color: var(--accent-secondary) !important;
+    font-weight: 600;
+}
+
+.sidebarFooter {
+    padding: var(--space-md);
+    border-top: 1px solid var(--border-color);
+}
+
+.logoutBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    border-radius: var(--radius-md);
+}
+
+.logoutBtn:hover {
+    background-color: rgba(255, 77, 77, 0.1);
+}
+
+.content {
+    flex: 1;
+    padding: var(--space-xl);
+    background-color: var(--bg-primary);
+    overflow-y: auto;
+}
+
+.dashboard {
+    max-width: 1200px;
+}
+
+.header {
+    margin-bottom: var(--space-xl);
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: var(--space-xs);
+}
+
+.header p {
+    color: var(--text-secondary);
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.statCard {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.statIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.statInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.statLabel {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 2px;
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.quickActions h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-md);
+}
+
+.actionGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+}
+
+.actionLink {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: var(--transition-fast);
+}
+
+.actionLink:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+}

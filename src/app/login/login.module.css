@@ -1,0 +1,63 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    background: radial-gradient(circle at center, rgba(112, 0, 255, 0.05), transparent);
+}
+
+.loginCard {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+}
+
+.title {
+    margin-bottom: var(--space-sm);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xl);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.googleBtn {
+    width: 100%;
+    padding: 0.8rem;
+    background: white;
+    color: #000;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-normal);
+    border: 1px solid #ddd;
+}
+
+.googleBtn:hover {
+    background: #f1f1f1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border-color);
+}
+
+.footer p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
