@@ -11,6 +11,7 @@
     width: 100%;
     border-collapse: collapse;
     text-align: left;
+    table-layout: fixed;
 }
 
 .table th {
@@ -19,12 +20,22 @@
     color: var(--text-secondary);
     font-weight: 600;
     font-size: 0.9rem;
+    white-space: nowrap;
 }
+
+.table th:nth-child(1) { width: 80px; }
+.table th:nth-child(2) { width: 120px; }
+.table th:nth-child(3) { width: auto; }
+.table th:nth-child(4) { width: 140px; }
+.table th:nth-child(5) { width: 80px; }
+.table th:nth-child(6) { width: 120px; }
 
 .table td {
     padding: var(--space-md);
     border-bottom: 1px solid var(--border-color);
     vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .table tr:last-child td {
@@ -62,9 +73,21 @@
     border: 1px solid var(--border-color);
 }
 
+.table td:nth-child(2),
+.table td:nth-child(4),
+.table td:nth-child(5) {
+    white-space: nowrap;
+}
+
+.table td:nth-child(3) {
+    white-space: normal;
+    word-break: break-word;
+}
+
 .actions {
     display: flex;
     gap: var(--space-sm);
+    flex-shrink: 0;
 }
 
 .iconBtn {
@@ -466,4 +489,48 @@
 
 .previewError span {
     font-size: 0.85rem;
+}
+
+/* Upload Button Styles */
+.uploadButtonWrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.uploadBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: white;
+    font-size: 0.9rem;
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.uploadBtn:hover:not(:disabled) {
+    background-color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+.uploadBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.uploadHint {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.uploadErrorMsg {
+    color: #ff4d4d;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    margin-bottom: 8px;
 }

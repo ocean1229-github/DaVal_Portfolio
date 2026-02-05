@@ -53,7 +53,7 @@ export default async function AboutPage() {
                                     </div>
                                 )}
                                 <div className={styles.textContent}>
-                                    {section.content.split('\n').map((line: string, i: number) => (
+                                    {section.content.split('\n').filter((line: string) => line.trim()).map((line: string, i: number) => (
                                         <p key={i}>{line}</p>
                                     ))}
                                 </div>

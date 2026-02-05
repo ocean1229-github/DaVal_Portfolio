@@ -241,20 +241,12 @@ export default function PortfolioForm({ initialData, isEdit = false }: Portfolio
 
             <div className={styles.formSection}>
                 <h3>미디어 및 상태</h3>
-                <div className={styles.row}>
-                    <ImageUpload
-                        label="클라이언트 로고"
-                        value={formData.client_logo_url || null}
-                        onChange={(url) => setFormData(prev => ({ ...prev, client_logo_url: url }))}
-                        bucket="images"
-                    />
-                    <ImageUpload
-                        label="대표 이미지 (Thumbnail)"
-                        value={formData.thumbnail_url || null}
-                        onChange={(url) => setFormData(prev => ({ ...prev, thumbnail_url: url }))}
-                        bucket="images"
-                    />
-                </div>
+                <ImageUpload
+                    label="클라이언트 로고"
+                    value={formData.client_logo_url || null}
+                    onChange={(url) => setFormData(prev => ({ ...prev, client_logo_url: url }))}
+                    bucket="images"
+                />
                 <div className={styles.inputGroup}>
                     <label>소개 영상 URL (유튜브 등)</label>
                     <input

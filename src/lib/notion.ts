@@ -65,10 +65,10 @@ export function notionPageToPortfolio(page: any): Portfolio {
         tags: getMultiSelectProperty(props.Tags),
         summary: getTextProperty(props.Summary),
         description: getTextProperty(props.Description),
-        client_logo_url: getFilesProperty(props.ClientLogo),
+        client_logo_url: getFilesProperty(props.Thumbnail),
         thumbnail_url: getFilesProperty(props.Thumbnail),
-        video_url: getTextProperty(props.VideoUrl),
-        video_type: (getSelectProperty(props.VideoType) || null) as Portfolio['video_type'],
+        video_url: '',
+        video_type: null,
         is_published: getCheckboxProperty(props.Published),
         display_order: getNumberProperty(props.Order),
         created_at: page.created_time,
@@ -192,6 +192,12 @@ function buildNotionProperties(data: Partial<Portfolio>): any {
     }
     if (data.display_order !== undefined) {
         properties.Order = { number: data.display_order };
+    }
+    // client_logo_url을 Thumbnail 속성에 저장
+    if (data.client_logo_url !== undefined) {
+        properties.Thumbnail = data.client_logo_url
+            ? { files: [{ type: 'external', name: 'logo', external: { url: data.client_logo_url } }] }
+            : { files: [] };
     }
 
     return properties;
