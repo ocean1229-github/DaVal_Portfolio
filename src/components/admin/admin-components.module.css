@@ -776,3 +776,103 @@
     color: var(--text-muted);
     opacity: 0.6;
 }
+
+/* Tab Navigation */
+.tabNav {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    padding: 6px;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+}
+
+.tabBtn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: transparent;
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.tabBtn:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.tabBtn.active {
+    background: var(--accent-gradient);
+    color: white;
+    font-weight: 600;
+}
+
+.tabCount {
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.tabBtn.active .tabCount {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Freemoa Direct Access */
+.freemoaDirectAccess {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-xl);
+}
+
+.directAccessCard {
+    max-width: 500px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(153, 27, 27, 0.1), rgba(112, 0, 255, 0.1));
+    border: 1px solid rgba(153, 27, 27, 0.3);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+}
+
+.directAccessCard h3 {
+    font-size: 1.25rem;
+    color: white;
+    margin-bottom: var(--space-md);
+}
+
+.directAccessCard p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-sm);
+    font-size: 0.95rem;
+}
+
+.freemoaLinkBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: var(--space-lg);
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #991b1b, #7f1d1d);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: var(--transition-normal);
+}
+
+.freemoaLinkBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(153, 27, 27, 0.4);
+    filter: brightness(1.1);
+}
