@@ -45,6 +45,10 @@
 
 /* Content Grid */
 .contentGrid {
+    display: block;
+}
+
+.contentGrid.hasImage {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-lg);
@@ -52,7 +56,7 @@
 }
 
 @media (min-width: 768px) {
-    .contentGrid {
+    .contentGrid.hasImage {
         grid-template-columns: 1fr 1fr;
     }
 }

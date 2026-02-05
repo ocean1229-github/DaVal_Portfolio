@@ -46,7 +46,7 @@ export default async function AboutPage() {
                                 <h1>{section.title}</h1>
                             </div>
 
-                            <div className={styles.contentGrid}>
+                            <div className={`${styles.contentGrid} ${section.image_url ? styles.hasImage : ''}`}>
                                 {section.image_url && (
                                     <div className={styles.imageWrapper}>
                                         <img src={section.image_url} alt={section.title} className={styles.sectionImage} />
