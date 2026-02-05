@@ -164,54 +164,102 @@ async function fetchFreemoaDirect(): Promise<Project[]> {
     return parseFreemoaResponse(text);
 }
 
-// 프록시를 통한 요청 (allorigins.win 사용)
+// 여러 프록시 서비스를 순차적으로 시도
 async function fetchFreemoaViaProxy(): Promise<Project[]> {
-    // allorigins는 GET만 지원하므로 HTML 페이지를 가져와서 파싱
     const targetUrl = 'https://www.freemoa.net/m4/s41?workType=1';
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
 
-    const response = await fetch(proxyUrl, {
-        headers: {
-            'User-Agent': COMMON_HEADERS['User-Agent'],
-        },
-        cache: 'no-store',
-    });
+    // 시도할 프록시 목록
+    const proxies = [
+        `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
+        `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`,
+        `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`,
+    ];
 
-    if (!response.ok) {
-        throw new Error(`Proxy HTTP ${response.status}`);
+    for (const proxyUrl of proxies) {
+        try {
+            console.log(`Trying proxy: ${proxyUrl.substring(0, 50)}...`);
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10초 타임아웃
+
+            const response = await fetch(proxyUrl, {
+                headers: {
+                    'User-Agent': COMMON_HEADERS['User-Agent'],
+                },
+                cache: 'no-store',
+                signal: controller.signal,
+            });
+
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+                console.log(`Proxy returned ${response.status}, trying next...`);
+                continue;
+            }
+
+            const html = await response.text();
+
+            if (!html || html.length < 100) {
+                console.log('Empty or too short response, trying next...');
+                continue;
+            }
+
+            const projects = parseFreemoaHtml(html);
+            if (projects.length > 0) {
+                console.log(`Success! Found ${projects.length} projects via proxy`);
+                return projects;
+            }
+        } catch (err) {
+            console.log(`Proxy failed: ${err instanceof Error ? err.message : String(err)}`);
+            continue;
+        }
     }
 
-    const html = await response.text();
+    throw new Error('All proxies failed');
+}
 
-    // HTML에서 프로젝트 데이터 추출 시도
+// 프리모아 HTML 페이지에서 프로젝트 추출
+function parseFreemoaHtml(html: string): Project[] {
     const $ = cheerio.load(html);
     const projects: Project[] = [];
 
-    // 프리모아 HTML 구조에서 프로젝트 추출
-    $('.project-list-item, .proj_li, [class*="project"]').each((_, el) => {
-        try {
-            const titleEl = $(el).find('a, .title, h3, h4').first();
-            const title = titleEl.text().trim();
-            if (!title || title.length < 5) return;
+    // 프리모아 프로젝트 목록 구조 분석 (여러 셀렉터 시도)
+    const selectors = [
+        '.project-list-item',
+        '.proj_li',
+        '.project_item',
+        '[class*="proj"]',
+        'li[data-idx]',
+        '.list_item',
+    ];
 
-            const link = titleEl.attr('href') || $(el).find('a').first().attr('href') || '';
-            const url = link.startsWith('http') ? link : `https://www.freemoa.net${link}`;
+    for (const selector of selectors) {
+        $(selector).each((_, el) => {
+            try {
+                const titleEl = $(el).find('a, .title, h3, h4, .proj_title').first();
+                const title = titleEl.text().trim();
+                if (!title || title.length < 5) return;
 
-            projects.push({
-                platform: 'freemoa',
-                title,
-                url,
-                budget: '프리모아에서 확인',
-                duration: '프리모아에서 확인',
-                status: '모집중'
-            });
-        } catch (err) {
-            // skip
-        }
-    });
+                const link = titleEl.attr('href') || $(el).find('a').first().attr('href') || '';
+                const url = link.startsWith('http') ? link : `https://www.freemoa.net${link}`;
 
-    if (projects.length === 0) {
-        throw new Error('Could not parse projects from proxy response');
+                // 중복 체크
+                if (projects.some(p => p.title === title)) return;
+
+                projects.push({
+                    platform: 'freemoa',
+                    title,
+                    url,
+                    budget: '프리모아에서 확인',
+                    duration: '프리모아에서 확인',
+                    status: '모집중'
+                });
+            } catch (err) {
+                // skip
+            }
+        });
+
+        if (projects.length > 0) break;
     }
 
     return projects.slice(0, 10);
