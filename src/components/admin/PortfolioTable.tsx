@@ -62,8 +62,8 @@ export default function PortfolioTable() {
                 <thead>
                     <tr>
                         <th>썸네일</th>
-                        <th>제목</th>
                         <th>회사명</th>
+                        <th>프로젝트 요약</th>
                         <th>분류</th>
                         <th>상태</th>
                         <th>관리</th>
@@ -79,8 +79,8 @@ export default function PortfolioTable() {
                                     <div className={styles.thumbnail} />
                                 )}
                             </td>
-                            <td>{portfolio.title}</td>
                             <td>{portfolio.company_name || '-'}</td>
+                            <td>{portfolio.title}</td>
                             <td>{portfolio.dev_type.toUpperCase()} / {portfolio.category}</td>
                             <td>
                                 <span className={`${styles.badge} ${portfolio.is_published ? styles.published : styles.draft}`}>

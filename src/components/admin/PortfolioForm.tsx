@@ -99,24 +99,25 @@ export default function PortfolioForm({ initialData, isEdit = false }: Portfolio
             <div className={styles.formSection}>
                 <h3>기본 정보</h3>
                 <div className={styles.inputGroup}>
-                    <label>프로젝트 제목</label>
+                    <label>회사명</label>
+                    <input
+                        type="text"
+                        name="company_name"
+                        value={formData.company_name || ''}
+                        onChange={handleChange}
+                        required
+                        placeholder="예: 더 현대, (주)다발"
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label>프로젝트 요약</label>
                     <input
                         type="text"
                         name="title"
                         value={formData.title || ''}
                         onChange={handleChange}
                         required
-                        placeholder="예: AI 기반 이커머스 추천 시스템"
-                    />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label>회사 명</label>
-                    <input
-                        type="text"
-                        name="company_name"
-                        value={formData.company_name || ''}
-                        onChange={handleChange}
-                        placeholder="예: (주)다발"
+                        placeholder="예: 포토부스 전용 프레임 출시 및 운영관리"
                     />
                 </div>
                 <div className={styles.inputGroup}>
@@ -127,7 +128,7 @@ export default function PortfolioForm({ initialData, isEdit = false }: Portfolio
                         value={formData.slug || ''}
                         onChange={handleChange}
                         required
-                        placeholder="예: ai-ecommerce-recommendation"
+                        placeholder="예: hyundai-photobooth"
                     />
                 </div>
                 <div className={styles.row}>
@@ -225,16 +226,6 @@ export default function PortfolioForm({ initialData, isEdit = false }: Portfolio
                             </span>
                         ))}
                     </div>
-                </div>
-                <div className={styles.inputGroup}>
-                    <label>요약 설명</label>
-                    <textarea
-                        name="summary"
-                        value={formData.summary || ''}
-                        onChange={handleChange}
-                        rows={2}
-                        placeholder="프로젝트의 핵심 내용을 간단히 요약하세요."
-                    />
                 </div>
                 <div className={styles.inputGroup}>
                     <label>상세 설명</label>
