@@ -87,19 +87,21 @@ export default function PortfolioTable() {
                                     {portfolio.is_published ? '공개' : '초안'}
                                 </span>
                             </td>
-                            <td className={styles.actions}>
-                                <Link href={`/portfolio/${portfolio.slug}`} target="_blank" className={styles.iconBtn}>
-                                    <ExternalLink size={18} />
-                                </Link>
-                                <Link href={`/admin/portfolio/${portfolio.id}`} className={styles.iconBtn}>
-                                    <Edit size={18} />
-                                </Link>
-                                <button
-                                    onClick={() => handleDelete(portfolio.id)}
-                                    className={`${styles.iconBtn} ${styles.deleteBtn}`}
-                                >
-                                    <Trash2 size={18} />
-                                </button>
+                            <td>
+                                <div className={styles.actions}>
+                                    <Link href={`/portfolio/${portfolio.slug}`} target="_blank" className={styles.iconBtn}>
+                                        <ExternalLink size={18} />
+                                    </Link>
+                                    <Link href={`/admin/portfolio/${portfolio.id}`} className={styles.iconBtn}>
+                                        <Edit size={18} />
+                                    </Link>
+                                    <button
+                                        onClick={() => handleDelete(portfolio.id)}
+                                        className={`${styles.iconBtn} ${styles.deleteBtn}`}
+                                    >
+                                        <Trash2 size={18} />
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     ))}
