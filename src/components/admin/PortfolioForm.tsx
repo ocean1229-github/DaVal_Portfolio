@@ -18,6 +18,7 @@ export default function PortfolioForm({ initialData, isEdit = false }: Portfolio
     const [formData, setFormData] = useState<Partial<Portfolio>>(
         initialData || {
             title: '',
+            company_name: '',
             slug: '',
             project_start_date: '',
             project_end_date: '',
@@ -106,6 +107,16 @@ export default function PortfolioForm({ initialData, isEdit = false }: Portfolio
                         onChange={handleChange}
                         required
                         placeholder="예: AI 기반 이커머스 추천 시스템"
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label>회사 명</label>
+                    <input
+                        type="text"
+                        name="company_name"
+                        value={formData.company_name || ''}
+                        onChange={handleChange}
+                        placeholder="예: (주)다발"
                     />
                 </div>
                 <div className={styles.inputGroup}>

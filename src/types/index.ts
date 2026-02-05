@@ -3,6 +3,7 @@ export type DevType = 'web' | 'app' | 'ai' | 'etc';
 export interface Portfolio {
     id: string;
     title: string;
+    company_name: string | null;
     slug: string;
     project_start_date: string | null;
     project_end_date: string | null;

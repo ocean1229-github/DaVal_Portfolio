@@ -53,6 +53,7 @@ export function notionPageToPortfolio(page: any): Portfolio {
     return {
         id: page.id,
         title: getTextProperty(props.Title),
+        company_name: getTextProperty(props.Company),
         slug: getTextProperty(props.Slug) || page.id.replace(/-/g, ''),
         project_start_date: getDateProperty(props.StartDate),
         project_end_date: getDateProperty(props.EndDate),
@@ -147,6 +148,9 @@ function buildNotionProperties(data: Partial<Portfolio>): any {
 
     if (data.title !== undefined) {
         properties.Title = { title: [{ text: { content: data.title } }] };
+    }
+    if (data.company_name !== undefined) {
+        properties.Company = { rich_text: [{ text: { content: data.company_name || '' } }] };
     }
     if (data.slug !== undefined) {
         properties.Slug = { rich_text: [{ text: { content: data.slug } }] };
