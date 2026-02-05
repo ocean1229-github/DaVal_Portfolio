@@ -49,11 +49,12 @@ function getFilesProperty(property: any): string | null {
 // Notion 페이지를 Portfolio 타입으로 변환
 export function notionPageToPortfolio(page: any): Portfolio {
     const props = page.properties;
+    const companyName = getTextProperty(props.Company);
 
     return {
         id: page.id,
         title: getTextProperty(props.Title),
-        company_name: getTextProperty(props.Company),
+        company_name: companyName || null,
         slug: getTextProperty(props.Slug) || page.id.replace(/-/g, ''),
         project_start_date: getDateProperty(props.StartDate),
         project_end_date: getDateProperty(props.EndDate),
