@@ -51,61 +51,88 @@ export async function GET() {
     });
 }
 
-// 위시켓: 외주(도급) 필터 적용
+// 위시켓: 외주(도급) 필터 적용 - 전체 페이지 가져오기
 async function fetchWishketProjects(): Promise<Project[]> {
+    const allProjects: Project[] = [];
+    let page = 1;
+    const maxPages = 10; // 최대 10페이지까지 (안전장치)
+
     try {
-        // d=A4FwvCCGDODWD6AjGBTAJkA%3D = 외주(도급) 필터
-        const response = await fetch('https://www.wishket.com/project/?d=A4FwvCCGDODWD6AjGBTAJkA%3D', {
-            headers: {
-                ...COMMON_HEADERS,
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-        });
+        while (page <= maxPages) {
+            // d=A4FwvCCGDODWD6AjGBTAJkA%3D = 외주(도급) 필터
+            const response = await fetch(`https://www.wishket.com/project/?d=A4FwvCCGDODWD6AjGBTAJkA%3D&page=${page}`, {
+                headers: {
+                    ...COMMON_HEADERS,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            });
 
-        if (!response.ok) throw new Error(`Wishket: ${response.status}`);
-
-        const data = await response.json();
-        const html = data.result;
-        const $ = cheerio.load(html);
-        const projects: Project[] = [];
-
-        $('.project-info-box').each((_, el) => {
-            try {
-                const statusText = $(el).find('.status-mark.recruiting-mark').text().trim();
-                if (!statusText.includes('모집 중')) return;
-
-                const titleEl = $(el).find('.project-link p');
-                const linkEl = $(el).find('.project-link');
-                if (!titleEl.length || !linkEl.length) return;
-
-                const title = titleEl.text().trim();
-                const relativeUrl = linkEl.attr('href') || '';
-
-                // 예산 추출
-                const budgetEl = $(el).find('.budget .body-1-medium');
-                const budget = budgetEl.text().trim() || '협의';
-
-                // 기간 추출
-                const termEl = $(el).find('.term .body-1-medium');
-                const duration = termEl.text().trim() || '협의';
-
-                projects.push({
-                    platform: 'wishket',
-                    title,
-                    url: `https://www.wishket.com${relativeUrl}`,
-                    budget,
-                    duration,
-                    status: '모집중'
-                });
-            } catch (err) {
-                console.error('Wishket parse error:', err);
+            if (!response.ok) {
+                console.log(`Wishket page ${page} failed: ${response.status}`);
+                break;
             }
-        });
 
-        return projects;
+            const data = await response.json();
+            const html = data.result;
+
+            // HTML이 비어있거나 없으면 종료
+            if (!html || html.trim() === '') {
+                console.log(`Wishket page ${page}: empty response, stopping`);
+                break;
+            }
+
+            const $ = cheerio.load(html);
+            const pageProjects: Project[] = [];
+
+            $('.project-info-box').each((_, el) => {
+                try {
+                    const statusText = $(el).find('.status-mark.recruiting-mark').text().trim();
+                    if (!statusText.includes('모집 중')) return;
+
+                    const titleEl = $(el).find('.project-link p');
+                    const linkEl = $(el).find('.project-link');
+                    if (!titleEl.length || !linkEl.length) return;
+
+                    const title = titleEl.text().trim();
+                    const relativeUrl = linkEl.attr('href') || '';
+
+                    // 중복 체크
+                    if (allProjects.some(p => p.url === `https://www.wishket.com${relativeUrl}`)) return;
+
+                    const budgetEl = $(el).find('.budget .body-1-medium');
+                    const budget = budgetEl.text().trim() || '협의';
+
+                    const termEl = $(el).find('.term .body-1-medium');
+                    const duration = termEl.text().trim() || '협의';
+
+                    pageProjects.push({
+                        platform: 'wishket',
+                        title,
+                        url: `https://www.wishket.com${relativeUrl}`,
+                        budget,
+                        duration,
+                        status: '모집중'
+                    });
+                } catch (err) {
+                    console.error('Wishket parse error:', err);
+                }
+            });
+
+            // 이 페이지에서 프로젝트가 없으면 종료
+            if (pageProjects.length === 0) {
+                console.log(`Wishket page ${page}: no projects found, stopping`);
+                break;
+            }
+
+            allProjects.push(...pageProjects);
+            console.log(`Wishket page ${page}: found ${pageProjects.length} projects (total: ${allProjects.length})`);
+            page++;
+        }
+
+        return allProjects;
     } catch (error) {
         console.error('Wishket fetch error:', error);
-        return [];
+        return allProjects; // 에러가 나도 지금까지 수집한 것은 반환
     }
 }
 

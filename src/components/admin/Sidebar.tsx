@@ -49,13 +49,9 @@ export default function Sidebar({ userName }: { userName?: string }) {
             ]
         },
         {
-            label: '지원 도구',
+            label: '프로젝트 탐색',
             icon: <ClipboardCheck size={20} />,
-            href: '/admin/support',
-            subItems: [
-                { label: '콘텐츠 복사', href: '/admin/support', icon: <List size={16} /> },
-                { label: '프로젝트 탐색', href: '/admin/support/projects', icon: <Briefcase size={16} /> }
-            ]
+            href: '/admin/support/projects'
         }
     ];
 
