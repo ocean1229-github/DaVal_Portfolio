@@ -51,16 +51,18 @@ export async function GET() {
     });
 }
 
-// 위시켓: 외주(도급) 필터 적용 - 전체 페이지 가져오기
+// 위시켓: 외주(도급) 프로젝트 전체 페이지 가져오기
+// 참고: d= 필터 파라미터는 페이지네이션과 함께 작동하지 않아서
+// 필터 없이 여러 페이지를 가져온 후 '외주' 프로젝트만 필터링
 async function fetchWishketProjects(): Promise<Project[]> {
     const allProjects: Project[] = [];
     let page = 1;
-    const maxPages = 10; // 최대 10페이지까지 (안전장치)
+    const maxPages = 5; // 최대 5페이지까지 (약 100개 프로젝트 검토)
+    let consecutiveEmptyPages = 0;
 
     try {
-        while (page <= maxPages) {
-            // d=A4FwvCCGDODWD6AjGBTAJkA%3D = 외주(도급) 필터
-            const response = await fetch(`https://www.wishket.com/project/?d=A4FwvCCGDODWD6AjGBTAJkA%3D&page=${page}`, {
+        while (page <= maxPages && consecutiveEmptyPages < 2) {
+            const response = await fetch(`https://www.wishket.com/project/?page=${page}`, {
                 headers: {
                     ...COMMON_HEADERS,
                     'X-Requested-With': 'XMLHttpRequest',
@@ -75,19 +77,25 @@ async function fetchWishketProjects(): Promise<Project[]> {
             const data = await response.json();
             const html = data.result;
 
-            // HTML이 비어있거나 없으면 종료
             if (!html || html.trim() === '') {
-                console.log(`Wishket page ${page}: empty response, stopping`);
-                break;
+                console.log(`Wishket page ${page}: empty response`);
+                consecutiveEmptyPages++;
+                page++;
+                continue;
             }
 
             const $ = cheerio.load(html);
-            const pageProjects: Project[] = [];
+            let pageNewProjects = 0;
 
             $('.project-info-box').each((_, el) => {
                 try {
+                    // 모집 중인 프로젝트만
                     const statusText = $(el).find('.status-mark.recruiting-mark').text().trim();
                     if (!statusText.includes('모집 중')) return;
+
+                    // 외주 프로젝트만 필터링 (외주 배지 확인)
+                    const boxHtml = $.html(el);
+                    if (!boxHtml.includes('외주')) return;
 
                     const titleEl = $(el).find('.project-link p');
                     const linkEl = $(el).find('.project-link');
@@ -95,9 +103,10 @@ async function fetchWishketProjects(): Promise<Project[]> {
 
                     const title = titleEl.text().trim();
                     const relativeUrl = linkEl.attr('href') || '';
+                    const fullUrl = `https://www.wishket.com${relativeUrl}`;
 
                     // 중복 체크
-                    if (allProjects.some(p => p.url === `https://www.wishket.com${relativeUrl}`)) return;
+                    if (allProjects.some(p => p.url === fullUrl)) return;
 
                     const budgetEl = $(el).find('.budget .body-1-medium');
                     const budget = budgetEl.text().trim() || '협의';
@@ -105,34 +114,34 @@ async function fetchWishketProjects(): Promise<Project[]> {
                     const termEl = $(el).find('.term .body-1-medium');
                     const duration = termEl.text().trim() || '협의';
 
-                    pageProjects.push({
+                    allProjects.push({
                         platform: 'wishket',
                         title,
-                        url: `https://www.wishket.com${relativeUrl}`,
+                        url: fullUrl,
                         budget,
                         duration,
                         status: '모집중'
                     });
+                    pageNewProjects++;
                 } catch (err) {
                     console.error('Wishket parse error:', err);
                 }
             });
 
-            // 이 페이지에서 프로젝트가 없으면 종료
-            if (pageProjects.length === 0) {
-                console.log(`Wishket page ${page}: no projects found, stopping`);
-                break;
+            if (pageNewProjects === 0) {
+                consecutiveEmptyPages++;
+            } else {
+                consecutiveEmptyPages = 0;
             }
 
-            allProjects.push(...pageProjects);
-            console.log(`Wishket page ${page}: found ${pageProjects.length} projects (total: ${allProjects.length})`);
+            console.log(`Wishket page ${page}: +${pageNewProjects} new (total: ${allProjects.length})`);
             page++;
         }
 
         return allProjects;
     } catch (error) {
         console.error('Wishket fetch error:', error);
-        return allProjects; // 에러가 나도 지금까지 수집한 것은 반환
+        return allProjects;
     }
 }
 
