@@ -535,10 +535,29 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--space-md);
+    padding: var(--space-md);
+    background-color: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.headerInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.projectCount {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.projectCount strong {
+    color: var(--accent-secondary);
 }
 
 .lastUpdated {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
 }
 
@@ -675,4 +694,22 @@
     padding: var(--space-xl);
     gap: var(--space-md);
     color: var(--text-secondary);
+}
+
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xl);
+    gap: var(--space-md);
+    background-color: rgba(255, 77, 77, 0.05);
+    border: 1px solid rgba(255, 77, 77, 0.2);
+    border-radius: var(--radius-lg);
+    margin-top: var(--space-lg);
+}
+
+.errorMsg {
+    color: #ff4d4d;
+    font-weight: 500;
 }

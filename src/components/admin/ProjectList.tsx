@@ -16,19 +16,26 @@ interface Project {
 export default function ProjectList() {
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [totalCount, setTotalCount] = useState(0);
     const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
     const fetchProjects = async () => {
         setLoading(true);
+        setError(null);
         try {
             const res = await fetch('/api/projects');
             const json = await res.json();
             if (json.success) {
                 setProjects(json.data);
-                setLastUpdated(new Date());
+                setTotalCount(json.totalCount || json.data.length);
+                setLastUpdated(new Date(json.timestamp || new Date()));
+            } else {
+                setError(json.error || '데이터를 불러오는 데 실패했습니다.');
             }
         } catch (err) {
             console.error('Failed to fetch projects', err);
+            setError('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
         } finally {
             setLoading(false);
         }
@@ -42,7 +49,18 @@ export default function ProjectList() {
         return (
             <div className={styles.loadingContainer}>
                 <RefreshCw className={styles.spinner} size={24} />
-                <p>프로젝트를 불러오는 중입니다...</p>
+                <p>실시간 프로젝트 정보를 수집 중입니다...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className={styles.errorContainer}>
+                <p className={styles.errorMsg}>{error}</p>
+                <button onClick={fetchProjects} className={styles.refreshBtn}>
+                    <RefreshCw size={16} /> 다시 시도
+                </button>
             </div>
         );
     }
@@ -51,6 +69,7 @@ export default function ProjectList() {
         <div className={styles.projectExplorer}>
             <div className={styles.explorerHeader}>
                 <div className={styles.headerInfo}>
+                    <span className={styles.projectCount}>총 <strong>{totalCount}</strong>개의 프로젝트 발견</span>
                     <p className={styles.lastUpdated}>
                         최근 업데이트: {lastUpdated?.toLocaleTimeString()}
                     </p>
