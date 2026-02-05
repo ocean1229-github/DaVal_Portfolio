@@ -584,6 +584,31 @@
     cursor: wait;
 }
 
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.linkBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.linkBtn:hover {
+    color: var(--accent-secondary);
+    border-color: var(--accent-secondary);
+}
+
 .projectGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -712,4 +737,42 @@
 .errorMsg {
     color: #ff4d4d;
     font-weight: 500;
+}
+
+/* Notice Box */
+.noticeBox {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.noticeHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--accent-secondary);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+}
+
+.noticeText {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.platformCardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+    text-align: center;
+}
+
+.platformIcon {
+    color: var(--text-muted);
+    opacity: 0.6;
 }

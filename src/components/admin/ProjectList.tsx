@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ExternalLink, RefreshCw, Briefcase, Clock, DollarSign } from 'lucide-react';
+import { ExternalLink, RefreshCw, Clock, DollarSign } from 'lucide-react';
 import styles from './admin-components.module.css';
 
 interface Project {
@@ -17,7 +17,6 @@ export default function ProjectList() {
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [totalCount, setTotalCount] = useState(0);
     const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
     const fetchProjects = async () => {
@@ -28,14 +27,13 @@ export default function ProjectList() {
             const json = await res.json();
             if (json.success) {
                 setProjects(json.data);
-                setTotalCount(json.totalCount || json.data.length);
                 setLastUpdated(new Date(json.timestamp || new Date()));
             } else {
                 setError(json.error || '데이터를 불러오는 데 실패했습니다.');
             }
         } catch (err) {
             console.error('Failed to fetch projects', err);
-            setError('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+            setError('네트워크 오류가 발생했습니다.');
         } finally {
             setLoading(false);
         }
@@ -49,7 +47,7 @@ export default function ProjectList() {
         return (
             <div className={styles.loadingContainer}>
                 <RefreshCw className={styles.spinner} size={24} />
-                <p>실시간 프로젝트 정보를 수집 중입니다...</p>
+                <p>프로젝트를 수집하고 있습니다...</p>
             </div>
         );
     }
@@ -65,18 +63,36 @@ export default function ProjectList() {
         );
     }
 
+    const wishketCount = projects.filter(p => p.platform === 'wishket').length;
+    const freemoaCount = projects.filter(p => p.platform === 'freemoa').length;
+
     return (
         <div className={styles.projectExplorer}>
             <div className={styles.explorerHeader}>
                 <div className={styles.headerInfo}>
-                    <span className={styles.projectCount}>총 <strong>{totalCount}</strong>개의 프로젝트 발견</span>
-                    <p className={styles.lastUpdated}>
-                        최근 업데이트: {lastUpdated?.toLocaleTimeString()}
-                    </p>
+                    <span className={styles.projectCount}>
+                        위시켓 <strong>{wishketCount}</strong>개
+                        {freemoaCount > 0 && ` • 프리모아 ${freemoaCount}개`}
+                    </span>
+                    {lastUpdated && (
+                        <p className={styles.lastUpdated}>
+                            업데이트: {lastUpdated.toLocaleTimeString()}
+                        </p>
+                    )}
                 </div>
-                <button onClick={fetchProjects} className={styles.refreshBtn} disabled={loading}>
-                    <RefreshCw size={16} /> 새로고침
-                </button>
+                <div className={styles.headerActions}>
+                    <a
+                        href="https://www.freemoa.net/m4/s41"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.linkBtn}
+                    >
+                        프리모아 직접 방문 <ExternalLink size={14} />
+                    </a>
+                    <button onClick={fetchProjects} className={styles.refreshBtn} disabled={loading}>
+                        <RefreshCw size={16} /> 새로고침
+                    </button>
+                </div>
             </div>
 
             <div className={styles.projectGrid}>
@@ -108,7 +124,7 @@ export default function ProjectList() {
                                 rel="noopener noreferrer"
                                 className={styles.applyBtn}
                             >
-                                상세 보기 및 지원 <ExternalLink size={14} />
+                                상세 보기 <ExternalLink size={14} />
                             </a>
                         </div>
                     ))
