@@ -29,7 +29,7 @@ export default async function AdminDashboard() {
 
             <div className={styles.statsGrid}>
                 <div className={styles.statCard}>
-                    <div className={styles.statIcon} style={{ backgroundColor: 'rgba(112, 0, 255, 0.1)', color: 'var(--accent-primary)' }}>
+                    <div className={styles.statIcon} style={{ backgroundColor: 'rgba(0, 87, 255, 0.08)', color: 'var(--accent-primary)' }}>
                         <FolderKanban size={24} />
                     </div>
                     <div className={styles.statInfo}>
@@ -39,7 +39,7 @@ export default async function AdminDashboard() {
                 </div>
 
                 <div className={styles.statCard}>
-                    <div className={styles.statIcon} style={{ backgroundColor: 'rgba(0, 212, 255, 0.1)', color: 'var(--accent-secondary)' }}>
+                    <div className={styles.statIcon} style={{ backgroundColor: 'rgba(37, 99, 235, 0.08)', color: 'var(--accent-secondary)' }}>
                         <Eye size={24} />
                     </div>
                     <div className={styles.statInfo}>
@@ -49,7 +49,7 @@ export default async function AdminDashboard() {
                 </div>
 
                 <div className={styles.statCard}>
-                    <div className={styles.statIcon} style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-secondary)' }}>
+                    <div className={styles.statIcon} style={{ backgroundColor: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}>
                         <Users size={24} />
                     </div>
                     <div className={styles.statInfo}>

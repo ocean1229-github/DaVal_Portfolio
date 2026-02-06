@@ -13,10 +13,8 @@
     font-size: 3.5rem;
     font-weight: 800;
     margin-bottom: var(--space-sm);
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
 }
 
 .header p {
@@ -31,19 +29,20 @@
 }
 
 .card {
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-primary);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     overflow: hidden;
     transition: var(--transition-normal);
     display: flex;
     flex-direction: column;
+    box-shadow: var(--shadow-sm);
 }
 
 .card:hover {
-    transform: translateY(-8px);
-    border-color: var(--accent-primary);
+    transform: translateY(-6px);
     box-shadow: var(--shadow-lg);
+    border-color: rgba(0, 87, 255, 0.15);
 }
 
 .thumbnailContainer {
@@ -75,7 +74,7 @@
 .typeBadge {
     font-size: 0.7rem;
     font-weight: 700;
-    color: var(--accent-secondary);
+    color: var(--accent-primary);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 8px;
@@ -84,7 +83,7 @@
 .cardContent h3 {
     font-size: 1.5rem;
     margin-bottom: 12px;
-    color: white;
+    color: var(--text-primary);
 }
 
 .cardContent p {
@@ -114,7 +113,7 @@
 }
 
 .detailLink {
-    color: white;
+    color: var(--accent-primary);
     display: flex;
     align-items: center;
     gap: 4px;
@@ -131,6 +130,13 @@
     margin-bottom: var(--space-xl);
 }
 
+.detailHeader h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
 .backBtn {
     color: var(--text-secondary);
     display: flex;
@@ -142,7 +148,7 @@
 }
 
 .backBtn:hover {
-    color: white;
+    color: var(--accent-primary);
 }
 
 .detailGrid {
@@ -154,6 +160,7 @@
 .mainContent h2 {
     font-size: 2rem;
     margin-bottom: var(--space-md);
+    color: var(--text-primary);
 }
 
 .description {
@@ -185,10 +192,11 @@
 }
 
 .infoBox h4 {
-    color: var(--accent-secondary);
+    color: var(--accent-primary);
     margin-bottom: var(--space-md);
     font-size: 0.9rem;
     text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .infoList {
@@ -211,4 +219,5 @@
 .infoValue {
     font-size: 1rem;
     font-weight: 500;
+    color: var(--text-primary);
 }

@@ -3,12 +3,11 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: var(--bg-primary);
-    background: radial-gradient(circle at center, rgba(112, 0, 255, 0.05), transparent);
+    background-color: var(--bg-secondary);
 }
 
 .loginCard {
-    background: var(--bg-secondary);
+    background: var(--bg-primary);
     border: 1px solid var(--border-color);
     padding: var(--space-xl);
     border-radius: var(--radius-lg);
@@ -22,6 +21,7 @@
     margin-bottom: var(--space-sm);
     font-size: 2rem;
     font-weight: 700;
+    color: var(--text-primary);
 }
 
 .subtitle {
@@ -42,13 +42,13 @@
     align-items: center;
     justify-content: center;
     transition: var(--transition-normal);
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
 }
 
 .googleBtn:hover {
-    background: #f1f1f1;
+    background: var(--bg-secondary);
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
 }
 
 .footer {

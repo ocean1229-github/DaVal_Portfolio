@@ -1,0 +1,24 @@
+.footer {
+    border-top: 1px solid var(--border-color);
+    padding: 2.5rem 2rem;
+    background-color: var(--bg-secondary);
+}
+
+.inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.copy {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
