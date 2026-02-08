@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { X, Calendar, Briefcase, ExternalLink, Tag } from 'lucide-react';
 import { Portfolio } from '@/types';
 import styles from './PortfolioModal.module.css';
@@ -73,10 +72,9 @@ export default function PortfolioModal({ portfolio, isOpen, onClose }: Portfolio
                     <div className={styles.cardFront}>
                         <div className={styles.imageSection}>
                             {portfolio.thumbnail_url ? (
-                                <Image
+                                <img
                                     src={portfolio.thumbnail_url}
                                     alt={portfolio.title}
-                                    fill
                                     className={styles.image}
                                 />
                             ) : (
@@ -84,7 +82,6 @@ export default function PortfolioModal({ portfolio, isOpen, onClose }: Portfolio
                                     <span>{portfolio.title.charAt(0)}</span>
                                 </div>
                             )}
-                            <div className={styles.imageGradient} />
                         </div>
                         <div className={styles.contentSection}>
                             <div className={styles.badges}>
