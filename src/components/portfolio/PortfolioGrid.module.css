@@ -97,71 +97,145 @@
     opacity: 1;
 }
 
-/* ===== IMAGE ===== */
+/* ===== PREMIUM GLASS SHOWCASE ===== */
 .imageWrapper {
     position: relative;
     width: 100%;
     height: 200px;
-    /* Showcase background - works for both dark & light logos */
-    background:
-        linear-gradient(135deg, rgba(255,255,255,0.03) 25%, transparent 25%),
-        linear-gradient(225deg, rgba(255,255,255,0.03) 25%, transparent 25%),
-        linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
-        linear-gradient(315deg, rgba(255,255,255,0.03) 25%, transparent 25%),
-        linear-gradient(to bottom right, #2a2a35, #1a1a24);
-    background-size: 20px 20px, 20px 20px, 20px 20px, 20px 20px, 100% 100%;
-    background-position: 0 0, 10px 0, 10px -10px, 0 10px, 0 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
-    box-sizing: border-box;
-    /* Inner glow for depth */
-    box-shadow: inset 0 0 30px rgba(139, 92, 246, 0.05);
+    overflow: hidden;
+    /* Base gradient */
+    background: linear-gradient(135deg, #1e1e2e 0%, #0f0f1a 100%);
+}
+
+/* Frosted Glass Panel */
+.imageWrapper::before {
+    content: '';
+    position: absolute;
+    inset: 16px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.03) 50%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 8px 32px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+/* Prism light effect */
+.imageWrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(45deg, transparent 30%, rgba(139, 92, 246, 0.1) 50%, transparent 70%),
+        linear-gradient(-45deg, transparent 30%, rgba(6, 182, 212, 0.08) 50%, transparent 70%);
+    z-index: 0;
+    opacity: 0.7;
+    transition: opacity 0.5s ease;
+}
+
+.card:hover .imageWrapper::after {
+    opacity: 1;
+}
+
+/* Floating glow orb */
+.glowOrb {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, transparent 70%);
+    border-radius: 50%;
+    top: -20px;
+    right: -20px;
+    z-index: 0;
+    filter: blur(25px);
+    opacity: 0.4;
+    transition: all 0.5s ease;
+}
+
+.card:hover .glowOrb {
+    opacity: 0.7;
+    transform: scale(1.4);
 }
 
 .card.featured .imageWrapper {
     height: 360px;
-    padding: 24px;
+}
+
+.card.featured .imageWrapper::before {
+    inset: 24px;
+    border-radius: 16px;
+}
+
+.card.featured .glowOrb {
+    width: 120px;
+    height: 120px;
+    top: -30px;
+    right: -30px;
 }
 
 .image {
+    position: relative;
+    z-index: 2;
     display: block;
     width: auto;
     height: auto;
-    max-width: 90%;
-    max-height: 85%;
+    max-width: 70%;
+    max-height: 65%;
     object-fit: contain;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    /* Subtle shadow for depth */
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4));
 }
 
 .card:hover .image {
-    transform: scale(1.03);
+    transform: scale(1.1) translateY(-4px);
+    filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.5));
+}
+
+.card.featured .image {
+    max-width: 65%;
+    max-height: 60%;
 }
 
 .placeholder {
-    width: 100%;
-    height: 100%;
+    position: relative;
+    z-index: 2;
+    width: 80px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.15));
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.2));
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .placeholder span {
-    font-size: 4rem;
-    font-weight: 800;
-    background: var(--accent-gradient);
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    opacity: 0.5;
+}
+
+.card.featured .placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
 }
 
 .card.featured .placeholder span {
-    font-size: 6rem;
+    font-size: 3rem;
 }
 
 /* Overlay */

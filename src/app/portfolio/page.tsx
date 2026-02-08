@@ -1,5 +1,5 @@
 import { getPortfolios } from '@/lib/notion';
-import PortfolioCard from '@/components/portfolio/PortfolioCard';
+import PortfolioList from '@/components/portfolio/PortfolioList';
 import { Portfolio } from '@/types';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -9,7 +9,7 @@ import { ArrowRight } from 'lucide-react';
 
 export const revalidate = 60;
 
-export default async function PortfolioList() {
+export default async function PortfolioPage() {
     let portfolios: Portfolio[] = [];
     let error: unknown = null;
 
@@ -41,11 +41,7 @@ export default async function PortfolioList() {
                         </div>
                     </div>
                 ) : (
-                    <div className={styles.grid}>
-                        {portfolios.map(portfolio => (
-                            <PortfolioCard key={portfolio.id} portfolio={portfolio} />
-                        ))}
-                    </div>
+                    <PortfolioList portfolios={portfolios} />
                 )}
 
                 {/* CTA Section */}

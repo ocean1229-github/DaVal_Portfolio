@@ -33,6 +33,8 @@ export default function PortfolioGrid({ portfolios }: PortfolioGridProps) {
                         onClick={() => handleCardClick(portfolio)}
                     >
                         <div className={styles.imageWrapper}>
+                            {/* Floating glow orb */}
+                            <div className={styles.glowOrb} />
                             {portfolio.thumbnail_url ? (
                                 <img
                                     src={portfolio.thumbnail_url}
