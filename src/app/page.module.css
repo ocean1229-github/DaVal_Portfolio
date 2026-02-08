@@ -1,9 +1,10 @@
 /* Main */
 .main {
   min-height: 100vh;
+  position: relative;
 }
 
-/* ===== HERO - 심플하고 임팩트있게 ===== */
+/* ===== HERO - Premium Glass Style ===== */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -13,69 +14,97 @@
   text-align: center;
   padding: 120px var(--space-lg);
   position: relative;
-  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+/* Ambient Glow Background */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15), transparent 70%);
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.1), transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
 }
 
 .heroContent {
-  max-width: 800px;
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
 }
 
 .title {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   margin-bottom: var(--space-md);
 }
 
 .titleSub {
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
-  font-weight: 400;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  font-weight: 500;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.25em;
 }
 
 .titleMain {
-  font-size: clamp(4rem, 15vw, 10rem);
+  font-size: clamp(5rem, 18vw, 12rem);
   font-weight: 800;
   letter-spacing: -0.04em;
-  line-height: 1;
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  line-height: 0.9;
+  color: var(--text-primary);
+  text-shadow: 0 0 80px rgba(139, 92, 246, 0.3);
 }
 
 .subtitle {
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   color: var(--text-secondary);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  font-weight: 400;
 }
 
 /* Scroll Indicator */
 .scrollIndicator {
   position: absolute;
-  bottom: 60px;
+  bottom: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
+  z-index: 1;
 }
 
 .scrollLine {
   width: 1px;
-  height: 60px;
+  height: 50px;
   background: linear-gradient(to bottom, var(--text-muted), transparent);
   animation: scrollPulse 2s ease-in-out infinite;
 }
 
 @keyframes scrollPulse {
-  0%, 100% { opacity: 0.3; transform: scaleY(1); }
-  50% { opacity: 1; transform: scaleY(1.2); }
+  0%, 100% { opacity: 0.3; height: 50px; }
+  50% { opacity: 0.8; height: 70px; }
 }
 
 /* ===== PORTFOLIO SECTION ===== */
@@ -83,6 +112,7 @@
   padding: var(--space-xl) var(--space-lg);
   max-width: 1400px;
   margin: 0 auto;
+  position: relative;
 }
 
 .portfolioHeader {
@@ -93,34 +123,42 @@
 }
 
 .portfolioTitle {
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  font-weight: 700;
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-weight: 600;
   color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
 .viewAllLink {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
   font-weight: 500;
-  transition: all 0.2s ease;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  transition: all var(--transition-normal);
 }
 
 .viewAllLink:hover {
-  color: var(--accent-secondary);
+  color: var(--text-primary);
+  background: var(--glass-hover);
+  border-color: rgba(255, 255, 255, 0.15);
   gap: 12px;
 }
 
-/* Portfolio Grid - Masonry 느낌 */
+/* Portfolio Grid */
 .portfolioGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-md);
 }
 
-/* 첫번째 카드는 크게 */
+/* Featured Card - Large */
 .portfolioCard.featured {
   grid-column: span 2;
   grid-row: span 2;
@@ -134,38 +172,84 @@
   font-size: 1.75rem;
 }
 
-/* Portfolio Card */
+.portfolioCard.featured .cardDesc {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+/* ===== GLASS CARD - Premium Style ===== */
 .portfolioCard {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  transition: all var(--transition-smooth);
   cursor: pointer;
 }
 
-.portfolioCard:hover {
-  transform: translateY(-8px);
-  border-color: rgba(112, 0, 255, 0.3);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+/* Glass Reflection Effect */
+.portfolioCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: var(--glass-shine);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
 }
 
+/* Border Glow on Hover */
+.portfolioCard::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius-lg);
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(6, 182, 212, 0.3), transparent);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  pointer-events: none;
+}
+
+.portfolioCard:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(139, 92, 246, 0.15);
+}
+
+.portfolioCard:hover::before {
+  opacity: 1;
+}
+
+.portfolioCard:hover::after {
+  opacity: 1;
+}
+
+/* Card Image */
 .cardImageWrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 12;
+  aspect-ratio: 16 / 11;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(112, 0, 255, 0.1), rgba(0, 212, 255, 0.05));
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.05));
 }
 
 .cardImage {
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--transition-smooth);
 }
 
 .portfolioCard:hover .cardImage {
-  transform: scale(1.08);
+  transform: scale(1.1);
 }
 
 .cardPlaceholder {
@@ -174,34 +258,50 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(112, 0, 255, 0.15), rgba(0, 212, 255, 0.1));
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(6, 182, 212, 0.1));
 }
 
 .cardPlaceholder span {
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--accent-secondary);
-  opacity: 0.5;
+  font-size: 4rem;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.6;
 }
 
+/* Card Overlay */
 .cardOverlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.2) 50%,
+    transparent 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-normal);
 }
 
 .cardOverlay svg {
   color: white;
-  transform: translate(-10px, 10px);
-  transition: transform 0.3s ease;
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  transform: translateY(20px);
+  transition: transform var(--transition-normal);
 }
 
 .portfolioCard:hover .cardOverlay {
@@ -209,33 +309,43 @@
 }
 
 .portfolioCard:hover .cardOverlay svg {
-  transform: translate(0, 0);
+  transform: translateY(0);
 }
 
+/* Card Info */
 .cardInfo {
   padding: var(--space-md);
+  position: relative;
+  z-index: 1;
 }
 
 .cardType {
-  font-size: 0.7rem;
+  display: inline-block;
+  font-size: 0.65rem;
   font-weight: 600;
   color: var(--accent-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  padding: 6px 12px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: var(--radius-full);
+  margin-bottom: 12px;
 }
 
 .cardTitle {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 8px 0;
+  margin-bottom: 8px;
   line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
 .cardDesc {
   font-size: 0.85rem;
   color: var(--text-muted);
-  line-height: 1.5;
+  line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
@@ -246,10 +356,11 @@
 /* Empty State */
 .emptyState {
   text-align: center;
-  padding: var(--space-xl) var(--space-lg);
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px dashed rgba(255, 255, 255, 0.1);
+  padding: var(--space-xl);
+  background: var(--glass-bg);
+  border: 1px dashed var(--glass-border);
   border-radius: var(--radius-lg);
+  backdrop-filter: blur(10px);
 }
 
 .emptyState p {
@@ -263,27 +374,47 @@
   margin-top: 8px;
 }
 
-/* ===== CTA SECTION ===== */
+/* ===== CTA SECTION - Glass Card ===== */
 .cta {
   padding: var(--space-xl) var(--space-lg);
-  margin: var(--space-xl) 0;
+  margin: var(--space-lg) 0;
 }
 
 .ctaContent {
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
   text-align: center;
   padding: var(--space-xl);
-  background: linear-gradient(135deg, rgba(112, 0, 255, 0.08), rgba(0, 212, 255, 0.04));
-  border: 1px solid rgba(112, 0, 255, 0.15);
-  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* CTA Glass Shine */
+.ctaContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
 }
 
 .ctaContent h2 {
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  font-weight: 700;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 600;
   color: var(--text-primary);
   margin-bottom: var(--space-lg);
+  letter-spacing: -0.02em;
 }
 
 .ctaLinks {
@@ -301,14 +432,15 @@
   background: var(--accent-gradient);
   color: white;
   font-weight: 600;
+  font-size: 0.9rem;
   border-radius: var(--radius-full);
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(112, 0, 255, 0.3);
+  transition: all var(--transition-normal);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
 }
 
 .ctaPrimary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(112, 0, 255, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
 }
 
 .ctaSecondary {
@@ -316,17 +448,19 @@
   align-items: center;
   gap: 8px;
   padding: 14px 28px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   color: var(--text-primary);
   font-weight: 600;
+  font-size: 0.9rem;
   border-radius: var(--radius-full);
-  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  transition: all var(--transition-normal);
 }
 
 .ctaSecondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--glass-hover);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* ===== RESPONSIVE ===== */
@@ -348,10 +482,15 @@
 
   .portfolioGrid {
     grid-template-columns: 1fr;
+    gap: var(--space-sm);
   }
 
   .portfolioCard.featured {
     grid-column: span 1;
+  }
+
+  .portfolioCard.featured .cardTitle {
+    font-size: 1.25rem;
   }
 
   .portfolioHeader {
@@ -372,5 +511,13 @@
 
   .scrollIndicator {
     display: none;
+  }
+
+  .portfolio {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  .cta {
+    padding: var(--space-lg) var(--space-sm);
   }
 }
