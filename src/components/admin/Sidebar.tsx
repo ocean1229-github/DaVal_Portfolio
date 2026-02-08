@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import {
     LayoutDashboard,
     FolderKanban,
-    ClipboardCheck,
     Building2,
     LogOut,
     PlusCircle,
@@ -47,11 +46,6 @@ export default function Sidebar({ userName }: { userName?: string }) {
                 { label: '서비스/강점', href: '/admin/company/services', icon: <Briefcase size={16} /> },
                 { label: '팀 소개', href: '/admin/company/team', icon: <Users size={16} /> }
             ]
-        },
-        {
-            label: '프로젝트 탐색',
-            icon: <ClipboardCheck size={20} />,
-            href: '/admin/support/projects'
         }
     ];
 
