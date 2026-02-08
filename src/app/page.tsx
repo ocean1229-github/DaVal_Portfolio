@@ -5,7 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { getPortfolios } from "@/lib/notion";
 import { Portfolio } from "@/types";
-import FlipCard from "@/components/portfolio/FlipCard";
+import PortfolioGrid from "@/components/portfolio/PortfolioGrid";
 
 export const revalidate = 60;
 
@@ -51,15 +51,7 @@ export default async function Home() {
           </div>
 
           {featuredPortfolios.length > 0 ? (
-            <div className={styles.portfolioGrid}>
-              {featuredPortfolios.map((portfolio, index) => (
-                <FlipCard
-                  key={portfolio.id}
-                  portfolio={portfolio}
-                  featured={index === 0}
-                />
-              ))}
-            </div>
+            <PortfolioGrid portfolios={featuredPortfolios} />
           ) : (
             <div className={styles.emptyState}>
               <p>포트폴리오를 준비 중입니다.</p>
