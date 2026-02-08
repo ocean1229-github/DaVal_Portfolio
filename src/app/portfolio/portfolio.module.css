@@ -119,9 +119,8 @@
 .thumbnailContainer {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    min-height: 200px;
     background: linear-gradient(135deg, rgba(18, 18, 22, 0.95), rgba(12, 12, 16, 0.98));
-    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -129,8 +128,9 @@
 }
 
 .thumbnail {
+    display: block;
     max-width: 100%;
-    max-height: 100%;
+    max-height: 220px;
     width: auto;
     height: auto;
     object-fit: contain;
@@ -139,7 +139,7 @@
 }
 
 .card:hover .thumbnail {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 .cardContent {

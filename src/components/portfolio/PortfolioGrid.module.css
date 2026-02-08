@@ -100,23 +100,23 @@
 .imageWrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
+    min-height: 180px;
     background: linear-gradient(135deg, rgba(18, 18, 22, 0.95), rgba(12, 12, 16, 0.98));
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 32px;
+    padding: 24px;
 }
 
 .card.featured .imageWrapper {
-    aspect-ratio: 16 / 9;
-    padding: 48px;
+    min-height: 280px;
+    padding: 32px;
 }
 
 .image {
+    display: block;
     max-width: 100%;
-    max-height: 100%;
+    max-height: 200px;
     width: auto;
     height: auto;
     object-fit: contain;
@@ -124,8 +124,12 @@
     filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4));
 }
 
+.card.featured .image {
+    max-height: 300px;
+}
+
 .card:hover .image {
-    transform: scale(1.08);
+    transform: scale(1.05);
 }
 
 .placeholder {
