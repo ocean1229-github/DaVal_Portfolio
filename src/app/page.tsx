@@ -5,7 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { getPortfolios } from "@/lib/notion";
 import { Portfolio } from "@/types";
-import Image from "next/image";
+import FlipCard from "@/components/portfolio/FlipCard";
 
 export const revalidate = 60;
 
@@ -53,34 +53,11 @@ export default async function Home() {
           {featuredPortfolios.length > 0 ? (
             <div className={styles.portfolioGrid}>
               {featuredPortfolios.map((portfolio, index) => (
-                <Link
+                <FlipCard
                   key={portfolio.id}
-                  href={`/portfolio/${portfolio.slug}`}
-                  className={`${styles.portfolioCard} ${index === 0 ? styles.featured : ''}`}
-                >
-                  <div className={styles.cardImageWrapper}>
-                    {portfolio.thumbnail_url ? (
-                      <Image
-                        src={portfolio.thumbnail_url}
-                        alt={portfolio.title}
-                        fill
-                        className={styles.cardImage}
-                      />
-                    ) : (
-                      <div className={styles.cardPlaceholder}>
-                        <span>{portfolio.title.charAt(0)}</span>
-                      </div>
-                    )}
-                    <div className={styles.cardOverlay}>
-                      <ArrowUpRight size={24} />
-                    </div>
-                  </div>
-                  <div className={styles.cardInfo}>
-                    <span className={styles.cardType}>{portfolio.dev_type}</span>
-                    <h3 className={styles.cardTitle}>{portfolio.title}</h3>
-                    <p className={styles.cardDesc}>{portfolio.summary}</p>
-                  </div>
-                </Link>
+                  portfolio={portfolio}
+                  featured={index === 0}
+                />
               ))}
             </div>
           ) : (
