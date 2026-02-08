@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { Portfolio } from '@/types';
 import PortfolioModal from './PortfolioModal';
@@ -35,10 +34,9 @@ export default function PortfolioGrid({ portfolios }: PortfolioGridProps) {
                     >
                         <div className={styles.imageWrapper}>
                             {portfolio.thumbnail_url ? (
-                                <Image
+                                <img
                                     src={portfolio.thumbnail_url}
                                     alt={portfolio.title}
-                                    fill
                                     className={styles.image}
                                 />
                             ) : (
