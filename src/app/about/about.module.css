@@ -137,42 +137,45 @@
 
 .logoRow {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 12px;
-    max-width: 800px;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    max-width: 100%;
     margin: 0 auto;
 }
 
 .logoItem {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 2 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: var(--radius-md);
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-lg);
     transition: all var(--transition-normal);
     overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .logoItem:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(37, 99, 235, 0.4);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .logoItem img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: brightness(0) invert(1);
-    opacity: 0.7;
-    transition: opacity var(--transition-normal);
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.6));
+    transition: all var(--transition-normal);
 }
 
 .logoItem:hover img {
-    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.7));
 }
 
 /* ===================================================================
@@ -671,7 +674,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0;
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-md);
 }
 
 .processStep {
@@ -731,7 +734,7 @@
     align-items: center;
     justify-content: center;
     padding: var(--space-md);
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-md);
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-lg);
@@ -919,14 +922,14 @@
 }
 
 /* ===================================================================
-   PRINT / PDF - KEEP DARK PREMIUM THEME
-   Optimized for A4 pages, sales-deck feel
+   PRINT / PDF - PREMIUM DARK SALES DECK
+   Each A4 page is filled edge-to-edge with content spread vertically
    =================================================================== */
 @media print {
-    /* Hide non-print */
+    /* Hide non-print elements */
     .printBtn { display: none !important; }
 
-    /* Global */
+    /* Global dark background */
     body {
         background: #0a0a0b !important;
         color: #ffffff !important;
@@ -934,15 +937,20 @@
 
     .brochure {
         background: #0a0a0b !important;
+        max-width: 100% !important;
     }
 
-    /* ---- Cover = Page 1 ---- */
+    /* ================================================================
+       COVER (Page 1) - Brand top, logos bottom, space-between fills A4
+       ================================================================ */
     .cover {
         min-height: 0;
         height: 100vh;
-        padding: 40px 40px 30px;
+        padding: 60px 48px 40px;
         background: #0a0a0b !important;
         page-break-after: always;
+        justify-content: center !important;
+        gap: 100px !important;
     }
 
     .coverGlow {
@@ -955,16 +963,24 @@
         filter: none !important;
     }
 
+    .coverContent {
+        max-width: 100% !important;
+        padding-top: 20px;
+    }
+
+    .coverBrand { margin-bottom: 20px !important; }
+
     .brandLogo {
-        font-size: 3rem;
+        font-size: 3.5rem !important;
         color: #2563eb !important;
         -webkit-text-fill-color: #2563eb !important;
         background: none !important;
     }
 
     .coverTitle {
-        font-size: 2.2rem !important;
+        font-size: 2.6rem !important;
         color: #ffffff !important;
+        margin-bottom: 16px !important;
     }
 
     .accent {
@@ -974,38 +990,45 @@
     }
 
     .coverSub {
+        font-size: 1.15rem !important;
         color: rgba(255, 255, 255, 0.7) !important;
+        line-height: 2 !important;
     }
 
-    .partners { padding-top: 20px !important; }
+    .partners {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+        width: 100%;
+    }
 
     .partnersLabel {
-        color: rgba(255, 255, 255, 0.35) !important;
-        margin-bottom: 8px !important;
+        color: rgba(255, 255, 255, 0.4) !important;
+        margin-bottom: 12px !important;
+        font-size: 0.7rem !important;
     }
 
     .logoRow {
-        gap: 8px !important;
+        gap: 10px !important;
         max-width: 100% !important;
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)) !important;
     }
 
     .logoItem {
-        background: rgba(255, 255, 255, 0.08) !important;
-        border-color: rgba(255, 255, 255, 0.1) !important;
-        padding: 8px !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        padding: 12px !important;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2) !important;
     }
 
     .logoItem img {
-        filter: brightness(0) invert(1) !important;
-        opacity: 0.75 !important;
+        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 1px rgba(255, 255, 255, 0.7)) !important;
     }
 
-    .coverBrand { margin-bottom: 16px !important; }
-    .coverTitle { margin-bottom: 12px !important; }
-
-    /* ---- Pages: fill each A4 page fully ---- */
+    /* ================================================================
+       PAGES - Each page fills A4, content spread with space-between
+       ================================================================ */
     .page {
-        padding: 30px 36px !important;
+        padding: 48px 48px !important;
         background: #0a0a0b !important;
         page-break-after: always;
         page-break-inside: avoid;
@@ -1016,7 +1039,7 @@
     }
 
     .pageAlt {
-        background: #0d0d0f !important;
+        background: #0c0c0e !important;
     }
 
     .page:last-child {
@@ -1024,34 +1047,40 @@
     }
 
     .pageInner {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        max-width: 100% !important;
     }
 
-    .sectionHeader { margin-bottom: 20px !important; }
-    .sectionLabel { color: #2563eb !important; }
-    .sectionTitle { color: #ffffff !important; font-size: 1.8rem !important; }
+    /* ---- Section Headers ---- */
+    .sectionHeader { margin-bottom: 16px !important; }
+    .sectionLabel { color: #2563eb !important; font-size: 0.65rem !important; }
+    .sectionTitle { color: #ffffff !important; font-size: 1.6rem !important; }
     .sectionSub { color: rgba(255, 255, 255, 0.4) !important; }
 
-    /* ---- Stats ---- */
+    /* ---- Stats Bar (enlarged for print) ---- */
     .statsBar {
         background: rgba(255, 255, 255, 0.04) !important;
         border-color: rgba(255, 255, 255, 0.08) !important;
-        padding: 16px 12px !important;
-        margin-bottom: 24px !important;
+        padding: 28px 20px !important;
+        margin-bottom: 28px !important;
+        border-radius: 16px !important;
     }
 
     .statIcon { color: #2563eb !important; }
-    .statNumber { color: #ffffff !important; }
-    .statLabel { color: rgba(255, 255, 255, 0.4) !important; }
-    .statDivider { background: rgba(255, 255, 255, 0.08) !important; }
+    .statNumber { color: #ffffff !important; font-size: 2.4rem !important; }
+    .statLabel { color: rgba(255, 255, 255, 0.45) !important; font-size: 0.8rem !important; }
+    .statDivider { background: rgba(255, 255, 255, 0.08) !important; height: 56px !important; }
 
     /* ---- Diff Cards ---- */
+    .diffGrid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 12px !important;
+        margin-bottom: 48px !important;
+    }
+
     .diffCard {
         background: rgba(255, 255, 255, 0.04) !important;
         border-color: rgba(255, 255, 255, 0.08) !important;
+        padding: 16px 14px !important;
     }
 
     .diffCardHighlight {
@@ -1060,8 +1089,11 @@
     }
 
     .diffIcon {
+        width: 40px !important;
+        height: 40px !important;
         background: rgba(37, 99, 235, 0.12) !important;
         color: #2563eb !important;
+        margin-bottom: 8px !important;
     }
 
     .diffIconGreen {
@@ -1069,8 +1101,8 @@
         color: #10b981 !important;
     }
 
-    .diffCard h3 { color: #ffffff !important; }
-    .diffCard p { color: rgba(255, 255, 255, 0.65) !important; }
+    .diffCard h3 { color: #ffffff !important; font-size: 1rem !important; margin-bottom: 6px !important; }
+    .diffCard p { color: rgba(255, 255, 255, 0.65) !important; font-size: 0.78rem !important; line-height: 1.6 !important; }
 
     .diffBadge {
         background: rgba(16, 185, 129, 0.15) !important;
@@ -1078,56 +1110,17 @@
         color: #10b981 !important;
     }
 
-    /* ---- Client Cards ---- */
-    .clientCard {
-        background: rgba(255, 255, 255, 0.03) !important;
-        border-color: rgba(255, 255, 255, 0.08) !important;
-    }
-
-    .clientIcon {
-        background: rgba(37, 99, 235, 0.1) !important;
-        color: #2563eb !important;
-    }
-
-    .clientName strong { color: #ffffff !important; }
-    .clientName span { color: rgba(255, 255, 255, 0.4) !important; }
-    .clientInfo p { color: rgba(255, 255, 255, 0.65) !important; }
-
-    .clientTags span {
-        background: rgba(37, 99, 235, 0.1) !important;
-        color: rgba(255, 255, 255, 0.5) !important;
-    }
-
-    /* ---- Portfolio ---- */
-    .portfolioCard {
-        background: rgba(255, 255, 255, 0.03) !important;
-        border-color: rgba(255, 255, 255, 0.08) !important;
-    }
-
-    .portfolioPlaceholder {
-        background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(16, 185, 129, 0.12)) !important;
-    }
-
-    .portfolioType {
-        background: rgba(0, 0, 0, 0.7) !important;
-        color: rgba(255, 255, 255, 0.8) !important;
-    }
-
-    .portfolioInfo h4 { color: #ffffff !important; }
-    .portfolioClient { color: #2563eb !important; }
-    .portfolioInfo p { color: rgba(255, 255, 255, 0.4) !important; }
-
-    .portfolioTags span {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border-color: rgba(255, 255, 255, 0.08) !important;
-        color: rgba(255, 255, 255, 0.4) !important;
-    }
-
     /* ---- Service Cards ---- */
+    .serviceGrid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 12px !important;
+    }
+
     .serviceCard {
         background: rgba(255, 255, 255, 0.04) !important;
         border-color: rgba(255, 255, 255, 0.08) !important;
         page-break-inside: avoid;
+        padding: 16px 14px !important;
     }
 
     .serviceCardFeatured {
@@ -1136,76 +1129,102 @@
     }
 
     .featuredBadge { background: #2563eb !important; }
-    .serviceIcon { background: rgba(37, 99, 235, 0.12) !important; color: #2563eb !important; }
+    .serviceIcon { width: 40px !important; height: 40px !important; background: rgba(37, 99, 235, 0.12) !important; color: #2563eb !important; }
     .serviceIconGreen { background: rgba(16, 185, 129, 0.12) !important; color: #10b981 !important; }
-    .serviceTag { color: rgba(255, 255, 255, 0.35) !important; }
-    .serviceCard h3 { color: #ffffff !important; }
-    .serviceCard p { color: rgba(255, 255, 255, 0.6) !important; }
-    .serviceFeatures li { color: rgba(255, 255, 255, 0.65) !important; }
+    .serviceTag { color: rgba(255, 255, 255, 0.35) !important; font-size: 0.6rem !important; }
+    .serviceCard h3 { color: #ffffff !important; font-size: 1rem !important; }
+    .serviceCard p { color: rgba(255, 255, 255, 0.6) !important; font-size: 0.75rem !important; line-height: 1.5 !important; }
+    .serviceFeatures li { color: rgba(255, 255, 255, 0.65) !important; font-size: 0.75rem !important; }
     .serviceFeatures li svg { color: #10b981 !important; }
-    .servicePrice { border-top-color: rgba(255, 255, 255, 0.08) !important; }
+    .serviceFeatures { gap: 4px !important; margin-bottom: 8px !important; }
+    .servicePrice { border-top-color: rgba(255, 255, 255, 0.08) !important; padding-top: 10px !important; }
     .priceLabel { color: rgba(255, 255, 255, 0.4) !important; }
-    .priceAmount { color: #ffffff !important; }
+    .priceAmount { color: #ffffff !important; font-size: 1.1rem !important; }
 
-    /* ---- Process ---- */
+    /* ---- Process (bigger icons, more space) ---- */
+    .processRow {
+        grid-template-columns: repeat(4, 1fr) !important;
+        margin-bottom: 0 !important;
+    }
+
     .processIcon {
+        width: 56px !important;
+        height: 56px !important;
         background: rgba(37, 99, 235, 0.12) !important;
         border-color: rgba(37, 99, 235, 0.25) !important;
         color: #2563eb !important;
     }
 
-    .processLabel { color: #2563eb !important; }
-    .processStep h4 { color: #ffffff !important; }
-    .processStep p { color: rgba(255, 255, 255, 0.4) !important; }
-    .processArrow { color: rgba(255, 255, 255, 0.15) !important; }
+    .processLabel { color: #2563eb !important; font-size: 0.65rem !important; }
+    .processStep h4 { color: #ffffff !important; font-size: 1.05rem !important; }
+    .processStep p { color: rgba(255, 255, 255, 0.5) !important; font-size: 0.8rem !important; }
+    .processArrow { color: rgba(255, 255, 255, 0.2) !important; }
 
-    /* ---- Tech Bar ---- */
+    /* ---- Tech Bar (wider, more readable) ---- */
     .techBar {
         background: rgba(255, 255, 255, 0.03) !important;
         border-color: rgba(255, 255, 255, 0.08) !important;
-        padding: 14px !important;
-        margin-bottom: 20px !important;
+        padding: 24px 20px !important;
+        margin-bottom: 0 !important;
+        flex-direction: row !important;
     }
 
-    .techLabel { color: #2563eb !important; }
-    .techItems { color: rgba(255, 255, 255, 0.6) !important; }
-    .techDivider { background: rgba(255, 255, 255, 0.08) !important; }
+    .techLabel { color: #2563eb !important; font-size: 0.65rem !important; }
+    .techItems { color: rgba(255, 255, 255, 0.65) !important; font-size: 0.85rem !important; }
+    .techDivider { background: rgba(255, 255, 255, 0.08) !important; width: 1px !important; height: 40px !important; margin: 0 16px !important; }
 
-    /* ---- CTA ---- */
-    .processRow { margin-bottom: 20px !important; }
-
+    /* ---- Contact Block (prominent) ---- */
     .contactBlock {
         background: rgba(37, 99, 235, 0.06) !important;
         border-color: rgba(37, 99, 235, 0.15) !important;
-        padding: 24px !important;
+        padding: 36px !important;
+        border-radius: 16px !important;
+        margin-top: 56px !important;
     }
 
     .contactBlock::before {
         background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.5), transparent) !important;
     }
 
-    .contactTitle { color: #2563eb !important; }
+    .contactTitle { color: #2563eb !important; font-size: 0.75rem !important; }
 
     .contactItem {
         background: rgba(255, 255, 255, 0.05) !important;
         border-color: rgba(255, 255, 255, 0.1) !important;
+        padding: 20px 32px !important;
     }
 
     .contactItem svg { color: #2563eb !important; }
-    .contactLabel { color: rgba(255, 255, 255, 0.4) !important; }
-    .contactValue { color: #ffffff !important; }
+    .contactLabel { color: rgba(255, 255, 255, 0.45) !important; }
+    .contactValue { color: #ffffff !important; font-size: 1.15rem !important; }
 
-    /* ---- Keep 3-col grids in print ---- */
-    .diffGrid { grid-template-columns: repeat(3, 1fr) !important; }
-    .serviceGrid { grid-template-columns: repeat(3, 1fr) !important; }
-    .portfolioGrid { grid-template-columns: repeat(3, 1fr) !important; }
-    .processRow { grid-template-columns: repeat(4, 1fr) !important; }
+    /* ---- Keep grid layouts in print ---- */
     .statsBar { flex-wrap: nowrap !important; }
     .statDivider { display: block !important; }
-    .techBar { flex-direction: row !important; }
-    .techDivider { width: 1px !important; height: 36px !important; margin: 0 var(--space-sm) !important; }
 
-    /* Remove hover transforms */
+    /* ---- Client Cards ---- */
+    .clientCard {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    .clientIcon { background: rgba(37, 99, 235, 0.1) !important; color: #2563eb !important; }
+    .clientName strong { color: #ffffff !important; }
+    .clientName span { color: rgba(255, 255, 255, 0.4) !important; }
+    .clientInfo p { color: rgba(255, 255, 255, 0.65) !important; }
+    .clientTags span { background: rgba(37, 99, 235, 0.1) !important; color: rgba(255, 255, 255, 0.5) !important; }
+
+    /* ---- Portfolio ---- */
+    .portfolioGrid { grid-template-columns: repeat(3, 1fr) !important; }
+    .portfolioCard { background: rgba(255, 255, 255, 0.03) !important; border-color: rgba(255, 255, 255, 0.08) !important; }
+    .portfolioPlaceholder { background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(16, 185, 129, 0.12)) !important; }
+    .portfolioType { background: rgba(0, 0, 0, 0.7) !important; color: rgba(255, 255, 255, 0.8) !important; }
+    .portfolioInfo h4 { color: #ffffff !important; }
+    .portfolioClient { color: #2563eb !important; }
+    .portfolioInfo p { color: rgba(255, 255, 255, 0.4) !important; }
+    .portfolioTags span { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(255, 255, 255, 0.08) !important; color: rgba(255, 255, 255, 0.4) !important; }
+
+    /* ---- Remove hover transforms ---- */
     .diffCard:hover,
     .clientCard:hover,
     .portfolioCard:hover,

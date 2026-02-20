@@ -1,30 +1,20 @@
 import type { Metadata } from 'next';
 import {
-    Shield, Users, Wrench, Building2,
+    Shield, Users, Wrench,
     MessageSquare, Palette, Code, Rocket, Phone, Mail,
-    ChevronRight, CheckCircle2, BrainCircuit, Award, Clock, Briefcase
+    ChevronRight, CheckCircle2, BrainCircuit
 } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { getPortfolios } from '@/lib/notion';
 import PrintButton from './PrintButton';
 import styles from './about.module.css';
-
-export const revalidate = 60;
 
 export const metadata: Metadata = {
     title: 'DaVal - 회사소개서',
     description: '대기업이 검증한 기술력, PM급 개발자가 직접 만드는 프리미엄 IT 솔루션',
 };
 
-export default async function AboutPage() {
-    let totalProjects = 21;
-    try {
-        const allPortfolios = await getPortfolios(true);
-        totalProjects = allPortfolios.length;
-    } catch {
-        // Fallback count when Notion API is unavailable (e.g. build time)
-    }
+export default function AboutPage() {
 
     return (
         <>
@@ -84,36 +74,9 @@ export default async function AboutPage() {
                     </div>
                 </section>
 
-                {/* ========== PAGE 2: TRUST NUMBERS + WHY US ========== */}
+                {/* ========== PAGE 2: WHY US + SERVICES (combined) ========== */}
                 <section className={styles.page}>
                     <div className={styles.pageInner}>
-                        {/* Trust Numbers */}
-                        <div className={styles.statsBar}>
-                            <div className={styles.stat}>
-                                <div className={styles.statIcon}><Briefcase size={20} /></div>
-                                <span className={styles.statNumber}>{totalProjects}+</span>
-                                <span className={styles.statLabel}>프로젝트 완료</span>
-                            </div>
-                            <div className={styles.statDivider} />
-                            <div className={styles.stat}>
-                                <div className={styles.statIcon}><Building2 size={20} /></div>
-                                <span className={styles.statNumber}>5+</span>
-                                <span className={styles.statLabel}>대기업 협업</span>
-                            </div>
-                            <div className={styles.statDivider} />
-                            <div className={styles.stat}>
-                                <div className={styles.statIcon}><Award size={20} /></div>
-                                <span className={styles.statNumber}>NIA</span>
-                                <span className={styles.statLabel}>최우수 선정</span>
-                            </div>
-                            <div className={styles.statDivider} />
-                            <div className={styles.stat}>
-                                <div className={styles.statIcon}><Clock size={20} /></div>
-                                <span className={styles.statNumber}>24/7</span>
-                                <span className={styles.statLabel}>매니지드 운영</span>
-                            </div>
-                        </div>
-
                         {/* Why DaVal */}
                         <div className={styles.sectionHeader}>
                             <span className={styles.sectionLabel}>WHY DAVAL</span>
@@ -158,15 +121,9 @@ export default async function AboutPage() {
                                 </p>
                             </div>
                         </div>
-                    </div>
-                </section>
 
-                {/* (주요 고객사 및 대표 프로젝트는 커버 로고로 대체) */}
-
-                {/* ========== PAGE 5: SERVICES ========== */}
-                <section className={`${styles.page} ${styles.pageAlt}`}>
-                    <div className={styles.pageInner}>
-                        <div className={styles.sectionHeader}>
+                        {/* Services */}
+                        <div className={styles.sectionHeader} style={{ marginTop: 'var(--space-xl)' }}>
                             <span className={styles.sectionLabel}>SERVICES</span>
                             <h2 className={styles.sectionTitle}>서비스 &amp; 견적 안내</h2>
                         </div>
