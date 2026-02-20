@@ -18,8 +18,13 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-    const allPortfolios = await getPortfolios(true);
-    const totalProjects = allPortfolios.length;
+    let totalProjects = 21;
+    try {
+        const allPortfolios = await getPortfolios(true);
+        totalProjects = allPortfolios.length;
+    } catch {
+        // Fallback count when Notion API is unavailable (e.g. build time)
+    }
 
     return (
         <>
