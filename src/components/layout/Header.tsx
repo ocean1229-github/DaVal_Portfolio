@@ -45,6 +45,12 @@ export default function Header() {
                 </Link>
                 <nav className={styles.nav}>
                     <Link
+                        href="/about"
+                        className={`${styles.navLink} ${pathname === '/about' ? styles.active : ''}`}
+                    >
+                        About
+                    </Link>
+                    <Link
                         href="/portfolio"
                         className={`${styles.navLink} ${pathname.startsWith('/portfolio') ? styles.active : ''}`}
                     >

@@ -48,3 +48,25 @@ textarea,
 select {
   font-family: inherit;
 }
+
+/* Print / PDF */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide navigation and footer in PDF */
+  header, footer, nav {
+    display: none !important;
+  }
+
+  body {
+    background-image: none !important;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
